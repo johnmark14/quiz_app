@@ -2,5 +2,5 @@
 
 A simple quiz app.
 
-## Author John Marks
+## Author John Mark
 
