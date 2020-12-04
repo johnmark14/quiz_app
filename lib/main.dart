@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-// import './questions.dart';
 import './quizBrain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizBrain quizBrain = new QuizBrain();
 void main() => runApp(QuizApp());
@@ -30,24 +30,55 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
 
+  void reset() {
+    setState(() {
+      scoreKeeper = [];
+      quizBrain.setQuestionNumber(0);
+    });
+  }
+
   void checkAnswer(bool pickAnswer) {
     bool correctAnswer = quizBrain.getQuestionAnswer();
-    if (pickAnswer == correctAnswer) {
-      print("You're correct!!");
-      scoreKeeper.add(Icon(
-        Icons.check,
-        color: Colors.green,
-      ));
+    if (quizBrain.ifFinished()) {
+      if (pickAnswer == correctAnswer) {
+        scoreKeeper.add(Icon(
+          Icons.check,
+          color: Colors.green,
+        ));
+      } else {
+        scoreKeeper.add(Icon(
+          Icons.close,
+          color: Colors.red,
+        ));
+      }
+      setState(() {
+        quizBrain.nextQuestion();
+      });
     } else {
-      scoreKeeper.add(Icon(
-        Icons.close,
-        color: Colors.red,
-      ));
-      print("Oh you're wrong");
+      setState(
+        () {
+          Alert(
+            context: super.context,
+            title: "QuizApp",
+            desc: "Congratulation for finishing this quiz!",
+            type: AlertType.info,
+            style: AlertStyle(isOverlayTapDismiss: false, isCloseButton: false),
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "OK",
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
+                ),
+                onPressed: () {
+                  reset();
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ).show();
+        },
+      );
     }
-    setState(() {
-      quizBrain.nextQuestion();
-    });
   }
 
   @override

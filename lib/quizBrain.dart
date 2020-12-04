@@ -48,4 +48,14 @@ class QuizBrain {
   bool getQuestionAnswer() {
     return _questionBanks[_questionNumber].questionAnswer;
   }
+
+  bool ifFinished() {
+    if (_questionNumber >= _questionBanks.length - 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  void setQuestionNumber(int number) => this._questionNumber = number;
 }
