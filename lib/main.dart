@@ -25,6 +25,18 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> scoreKeeper = [
+    // Icon(
+    //   Icons.check,
+    //   color: Colors.green,
+    // ),
+  ];
+  List<String> questions = [
+    'You can lead a cow down the stairs but not up stairs.',
+    'Approxiametely one quarter of human bones are in the feet.',
+    'A slug\'s blood is green.'
+  ];
+  int questionNumber = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,7 +49,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where question text will go.',
+                questions[questionNumber],
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 25.0, color: Colors.white),
               ),
@@ -54,7 +66,9 @@ class _QuizPageState extends State<QuizPage> {
                 style: TextStyle(color: Colors.white, fontSize: 20.0),
               ),
               onPressed: () {
-                //The user picked true
+                setState(() {
+                  questionNumber++;
+                });
               },
             ),
           ),
@@ -74,7 +88,9 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
         ),
-        // TODO: Add a row here for score
+        Row(
+          children: scoreKeeper,
+        )
       ],
     );
   }
